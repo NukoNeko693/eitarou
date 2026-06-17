@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube MP4 Downloader</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 16px;
+      background: #f7f7f7;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .video {
+      display: flex;
+      gap: 16px;
+      background: white;
+      padding: 12px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: black;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .video:hover {
+      background: #eee;
+    }
+
+    .video img {
+      width: 180px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .title {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .hint {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube MP4 Downloader</h1>
+
+  <form method="get">
+    <input
+      type="text"
+      name="q"
+      placeholder="キーワードを入力"
+      value="{{ query }}"
+      required
+    >
+    <button type="submit">検索</button>
+  </form>
+
+  {% if videos %}
+    <p class="hint">動画をクリックするとダウンロードします。</p>
+
+    {% for video in videos %}
+      <a class="video" href="/download/{{ video.id }}">
+        <img src="{{ video.thumbnail }}" alt="thumbnail">
+        <div>
+          <div class="title">{{ video.title }}</div>
+          <p class="hint">{{ video.url }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  {% elif query %}
+    <p>動画が見つかりませんでした。</p>
+  {% endif %}
+</body>
+</html>
